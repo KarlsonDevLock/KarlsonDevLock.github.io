@@ -1,0 +1,76 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body{
+    background-color: #fff;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+body::before{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("noWordLogo.png");
+    background-position: right center;
+    background-repeat: no-repeat;
+    background-size: 200vw auto;
+    opacity: 0.12;
+    z-index: -1;
+}
+
+.wrap{
+    display: flex;
+    gap: 40px;
+}
+
+.card{
+    background-color: #fffefe;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 30px;
+}
+
+.card-imahe{
+    
+    align-items: center;
+    justify-content: center;
+}
+
+.card-imahe img{
+    width: 200px;
+}
+
+.indexcard-text h2{
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.card-text p{
+    color: #555;
+    max-width: 250px;
+}
+
+.links{
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.links a img{
+    width: 45px;
+    height: 45px;
+    transition: 0.2s;
+}
+
+.links a img:hover{
+    transform: scale(1.15);
+}
