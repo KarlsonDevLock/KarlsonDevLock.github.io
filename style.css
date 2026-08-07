@@ -19,12 +19,12 @@
     --header-height: 78px;
 
     /* Home project slider gradients — customize these to match each project logo. */
-    --project-1-a: #1b1a19;
-    --project-1-b: #6d6255;
-    --project-2-a: #211f1d;
-    --project-2-b: #7f7465;
-    --project-3-a: #191c1f;
-    --project-3-b: #66707a;
+    --project-1-a: #032234;
+    --project-1-b: #04486f;
+    --project-2-a: #074b6d;
+    --project-2-b: #aceba5;
+    --project-3-a: #586240;
+    --project-3-b: #f6faca;
 }
 
 /* Basic reset and typography. */
