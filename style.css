@@ -163,6 +163,100 @@ label {
     outline: none;
 }
 
+/* =========================================
+   DROPDOWN MENU
+   ========================================= */
+
+/* Wrapper — establishes positioning context */
+.dropdown {
+    position: relative;
+}
+
+/* Button reset — overrides browser defaults for <button> */
+.dropdown-toggle {
+    background: none;
+    cursor: pointer;
+}
+
+.dropdown-arrow {
+    display: inline-block;
+    margin-left: 4px;
+    font-size: 0.6em;
+    transition: transform 200ms ease;
+}
+
+/* Rotate arrow when open */
+.dropdown.is-open .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+/* Hidden by default (required by assignment) */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    min-width: 180px;
+    list-style: none;
+    padding: 6px 0;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 16px;
+    background: rgba(10, 10, 10, 0.92);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    z-index: 10;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Visible state (required by assignment) */
+.dropdown-menu.show {
+    display: block;
+}
+
+/* Menu items — match existing nav-button hover style */
+.dropdown-menu li a {
+    display: block;
+    padding: 10px 20px;
+    color: #d5d2cc;
+    font-size: 0.84rem;
+    white-space: nowrap;
+    border-radius: 0;
+    transition: background 180ms ease, color 180ms ease;
+}
+
+.dropdown-menu li a:hover,
+.dropdown-menu li a:focus-visible {
+    background: #f2f0eb;
+    color: #141414;
+    outline: none;
+}
+
+/* First/last items: add border-radius to match pill container */
+.dropdown-menu li:first-child a {
+    border-radius: 16px 16px 0 0;
+}
+.dropdown-menu li:last-child a {
+    border-radius: 0 0 16px 16px;
+}
+
+/* Mobile: shrink to fit narrow header */
+@media (max-width: 640px) {
+    .dropdown-toggle {
+        min-height: 36px;
+        padding-inline: 11px;
+        font-size: 0.72rem;
+    }
+
+    .dropdown-menu {
+        min-width: 150px;
+    }
+
+    .dropdown-menu li a {
+        padding: 8px 16px;
+        font-size: 0.72rem;
+    }
+}
+
 /* =========================================================
    HOME — INTRO / VIDEO HERO
    Replace assets/videos/hero-bg.mp4 in index.html with your video.

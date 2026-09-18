@@ -12,7 +12,17 @@
         <a class="brand" href="index.html#home" aria-label="KarlDev home"><img src="assets/images/KarlsonDevWORD.png" alt="KarlsonDevLock"></a>
         <nav class="main-nav" aria-label="Primary navigation">
             <a class="nav-button" href="index.html#home">Home</a>
-            <a class="nav-button active" href="projects-games.html">Projects</a>
+            <div class="dropdown">
+                <button class="nav-button dropdown-toggle" id="projectsDropdownBtn"
+                        aria-haspopup="true" aria-expanded="false">
+                    Projects <span class="dropdown-arrow" aria-hidden="true">▼</span>
+                </button>
+                <ul class="dropdown-menu" id="projectsDropdownMenu" role="menu">
+                    <li role="none"><a role="menuitem" href="projects-games.html">Games</a></li>
+                    <li role="none"><a role="menuitem" href="projects-web.html">Website</a></li>
+                    <li role="none"><a role="menuitem" href="projects-mobile.html">Mobile</a></li>
+                </ul>
+            </div>
             <a class="nav-button" href="index.html#about">About</a>
         </nav>
         <nav class="project-tabs" aria-label="Project categories">
@@ -176,5 +186,6 @@
     <footer class="site-footer compact-footer">
         <div class="section-shell footer-bottom"><span>© 2026 KarlDev</span><a href="index.html#home">Home ↗</a></div>
     </footer>
+    <script src="script.js"></script>
 </body>
 </html>

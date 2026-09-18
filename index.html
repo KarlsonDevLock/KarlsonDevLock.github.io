@@ -14,7 +14,17 @@
         </a>
         <nav class="main-nav" aria-label="Primary navigation">
             <a class="nav-button active" href="#home">Home</a>
-            <a class="nav-button" href="projects-games.html">Projects</a>
+            <div class="dropdown">
+                <button class="nav-button dropdown-toggle" id="projectsDropdownBtn"
+                        aria-haspopup="true" aria-expanded="false">
+                    Projects <span class="dropdown-arrow" aria-hidden="true">▼</span>
+                </button>
+                <ul class="dropdown-menu" id="projectsDropdownMenu" role="menu">
+                    <li role="none"><a role="menuitem" href="projects-games.html">Games</a></li>
+                    <li role="none"><a role="menuitem" href="projects-web.html">Website</a></li>
+                    <li role="none"><a role="menuitem" href="projects-mobile.html">Mobile</a></li>
+                </ul>
+            </div>
             <a class="nav-button" href="#about">About</a>
         </nav>
     </header>
@@ -182,5 +192,6 @@
             <a href="#home">Back to top ↑</a>
         </div>
     </footer>
+    <script src="script.js"></script>
 </body>
 </html>
