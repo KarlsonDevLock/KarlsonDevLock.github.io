@@ -1,17 +1,16 @@
 # KarlDev Portfolio
 
-Portfolio for game, web, and mobile development — rebuilt from the original static
-HTML/CSS site into two projects that share the same design and assets.
+My portfolio as a React web app — rebuilt from the original static HTML/CSS site.
+Same design, same images and videos, only the code environment changed.
 
 | Folder | What it is | Stack |
 | --- | --- | --- |
-| `react/` | the portfolio as a React web app | Vite 8 · React 19 · Tailwind CSS v4 · React Router |
-| `mobile/` | the portfolio as a native mobile app | Expo SDK 58 · React Native 0.88 · Expo Router |
-| `assets/` | the original images and videos, shared by both projects | — |
+| `react/` | the portfolio website | Vite 8 · React 19 · Tailwind CSS v4 · React Router |
+| `assets/` | the original images and videos used by the app | — |
 
-The old static site (`index.html`, `projects-*.html`, `style.css`, `script.js`) has
-been removed now that both ports are verified. It is still in git history if you
-ever need it:
+The old static site (`index.html`, `projects-*.html`, `style.css`, `script.js`) was
+removed after the React port was verified. It is still in git history if you ever
+need it:
 
 ```bash
 git log --oneline -- index.html      # find the commit
@@ -21,42 +20,35 @@ git show <commit>:index.html > index.html
 ## Run
 
 ```bash
-# web
 cd react
 npm install
 npm run dev        # http://localhost:5173
-
-# native
-cd mobile
-npm install
-npx expo start     # Expo Go QR code, or press a / i / w
 ```
 
-Both projects copy `assets/` into themselves automatically before starting or
-building (`scripts/sync-assets.mjs`). The copies are gitignored, so the ~85 MB of
-media is stored once.
+Before `dev`/`build`, `react/scripts/sync-assets.mjs` copies `assets/` into
+`react/public/assets`. That copy is gitignored, so the ~85 MB of media is stored
+once, in `assets/`.
 
-## Deploy (GitHub Pages)
+## Live
 
-`.github/workflows/deploy-pages.yml` builds `react/` and publishes `react/dist`.
+<https://karlsondevlock.github.io/>
 
-One-time setup in the repository:
+Deployed by `.github/workflows/deploy-pages.yml`, which builds `react/` and
+publishes `react/dist` to GitHub Pages (Pages source: **GitHub Actions**).
 
-1. **Settings → Pages → Build and deployment → Source: GitHub Actions.**
-2. Push to `main` (or run the workflow manually).
+Routes (HashRouter):
 
-The site then serves at <https://karlsondevlock.github.io/> with the React app
-(HashRouter routes: `/#/projects/games`, `/#/projects/web`, `/#/projects/mobile`).
-
-> Set the Pages source **before** pushing the removal commit, otherwise the old
-> branch deployment has nothing to serve until the workflow runs.
+- `/#/` — Home
+- `/#/projects/games` — Game projects
+- `/#/projects/web` — Website projects
+- `/#/projects/mobile` — Mobile projects (a project category, not a mobile app)
 
 ## Notes
 
-- Full conversion details and the HTML → React → React Native mapping are in
-  [`PORTING-NOTES.md`](./PORTING-NOTES.md).
-- Known platform differences (radial gradient approximation, Android blur
-  fallback, 85 MB of video, missing store IDs) are listed in
-  [`mobile/README.md`](./mobile/README.md).
-- The repo declares `Inter` in the original CSS but never loaded it, so both
-  projects intentionally use the system font — that is what visitors saw.
+- The HTML → React mapping is documented in [`PORTING-NOTES.md`](./PORTING-NOTES.md).
+- Posters referenced by the original HTML (`assets/images/projects/*.svg`) do not
+  exist in the repo, so they were omitted rather than faked.
+- The original CSS declares `Inter` but never loaded an Inter webfont, so the site
+  uses the system font — that is what visitors actually saw.
+- Media is ~85 MB. It is copied into the build output, so keep an eye on the
+  GitHub Pages size limits if you add more videos.

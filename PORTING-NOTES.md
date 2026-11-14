@@ -1,58 +1,46 @@
-# Portfolio → React Native (porting notes)
+# Portfolio → React (porting notes)
 
 The original static site (`index.html`, `projects-*.html`, `style.css`,
-`script.js`) has been **removed** from the repo root now that both ports were
-verified; it remains in git history. The shared `assets/` folder was kept because
-both projects read from it (see `scripts/sync-assets.mjs`). Two projects now
-live here:
-
-| Folder | Stack | Purpose |
-| --- | --- | --- |
-| `react/` | Vite 8 + React 19 + Tailwind CSS v4 | the website rebuilt as a React web app |
-| `mobile/` | Expo SDK 58 + React Native 0.88 + Expo Router | the same UI rebuilt as a native mobile app |
-
-Nothing was rewritten by hand-waving: the CSS was translated token by token
-(colors, radii, spacing, `clamp()` type scale, the 900 px / 640 px breakpoints,
-the two profile keyframes, the carousel timing curve) and every asset is the
-original file.
+`script.js`) was removed once the React port was verified; it remains in git
+history. `react/` is the website, and `assets/` is the shared media folder that
+`react/scripts/sync-assets.mjs` copies into `react/public/assets` before every
+start/build.
 
 ## Run
 
 ```bash
-# web (React + Tailwind)
 cd react
 npm install
 npm run dev
-
-# native (Expo / React Native)
-cd mobile
-npm install
-npx expo start      # scan the QR with Expo Go, or press a / i / w
 ```
 
 ## What maps to what
 
-| Original | React web port | React Native app |
-| --- | --- | --- |
-| 4 static HTML pages | React Router (`HashRouter`) | Expo Router stack (4 routes) |
-| `style.css` | Tailwind v4 `@theme` tokens + utilities | `StyleSheet` + `src/theme.js` |
-| `script.js` dropdown | React state + outside-click/Escape | `Modal` popover + BackHandler |
-| radio-input carousel | `useState` + CSS transform | `useState` + `Animated.timing` |
-| hero video | `<video autoPlay muted loop>` | `expo-video` `useVideoPlayer` |
-| CSS gradients | CSS gradients | `expo-linear-gradient` |
-| `backdrop-filter` | Tailwind `backdrop-blur` | `expo-blur` |
-| profile cross-fade keyframes | CSS keyframes | `Animated.loop` |
-| fixed header | `position: fixed` | absolute header + safe-area insets |
+| Original | React port |
+| --- | --- |
+| 4 static HTML pages | React Router (`HashRouter`): `/`, `/projects/games`, `/projects/web`, `/projects/mobile` |
+| `style.css` | Tailwind v4 `@theme` tokens + utilities |
+| `script.js` dropdown | React state + outside-click + `Escape` |
+| radio-input carousel | `useState` index + CSS transform, same 520 ms cubic-bezier |
+| per-slide section gradient | inline gradient from data, `transition: background 420 ms` |
+| `<video autoplay muted loop playsinline>` | native `<video>` with the same attributes |
+| `backdrop-filter: blur()` | `backdrop-blur-*` utilities |
+| CSS keyframe photo/logo cross-fade | unchanged CSS keyframes |
+| `position: fixed` header and `#home` / `#about` anchors | same fixed header; `scrollIntoView` and router state for cross-page links |
+| relative `assets/...` paths | `BASE_URL`-aware asset helper, files copied into `public/assets` |
+| 900 px / 640 px media queries, `clamp()` type scale | same values via Tailwind arbitrary variants and `clamp()` |
 
 ## Things worth knowing
 
-- The videos total ~85 MB. That is fine for Expo Go and a course demo, but the
-  Play Store caps new apps at 100 MB — compress them before an EAS build.
-- Posters referenced by the original HTML (`assets/images/projects/*.svg`) do
-  not exist in the repo; they were omitted rather than faked.
-- `mobile/scripts/sync-assets.mjs` copies `assets/` → `mobile/assets/portfolio`
-  and renames the one `.PNG` file to `.png` (Metro is case-sensitive about
-  extensions). `react/scripts/sync-assets.mjs` copies `assets/` → `public/assets`.
-  Both copies are gitignored and run automatically before start/build.
-- Store identifiers (`ios.bundleIdentifier`, `android.package`) are not set yet.
-  Add them in `mobile/app.json` before publishing.
+- The old HTML referenced capitalised tool logos (`BlenderLogo.png`,
+  `VscodeLogo.png`, `Vscode2022Logo.png`). The files are lowercased now so they
+  load on Linux/GitHub Pages, where paths are case-sensitive.
+- Videos total ~85 MB and are copied into `public/assets` at build time. The copy
+  is gitignored; the single source is the repo-root `assets/` folder.
+- Posters referenced by the old HTML (`assets/images/projects/*.svg`) do not exist
+  in the repo, so no posters are used.
+- The original CSS declares `Inter` but never loads it, so the site uses the
+  system UI font — identical to what the static site displayed.
+- Deployment: `.github/workflows/deploy-pages.yml` builds `react/` and publishes
+  `react/dist` to GitHub Pages (`/#/projects/games`, `/#/projects/web`,
+  `/#/projects/mobile`).
