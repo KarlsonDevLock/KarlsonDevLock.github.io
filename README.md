@@ -1,54 +1,60 @@
 # KarlDev Portfolio
 
-My portfolio as a React web app — rebuilt from the original static HTML/CSS site.
-Same design, same images and videos, only the code environment changed.
+My personal web portfolio — the games, websites, and mobile apps I've built, plus a
+little about me.
 
-| Folder | What it is | Stack |
-| --- | --- | --- |
-| `react/` | the portfolio website | Vite 8 · React 19 · Tailwind CSS v4 · React Router |
-| `assets/` | the original images and videos used by the app | — |
+**Live site:** <https://karlsondevlock.github.io/>
 
-The old static site (`index.html`, `projects-*.html`, `style.css`, `script.js`) was
-removed after the React port was verified. It is still in git history if you ever
-need it:
+## Sections
 
-```bash
-git log --oneline -- index.html      # find the commit
-git show <commit>:index.html > index.html
-```
+- **Home** — hero video, featured projects carousel, about me, contact links
+- **Games** — my game development projects
+- **Website** — the websites I've built
+- **Mobile** — the mobile apps I've built
+- **About** — the tools I use and my skills
 
-## Run
+## Tech stack
+
+React 19 · Vite 8 · Tailwind CSS v4 · React Router
+
+## Run locally
 
 ```bash
 cd react
 npm install
-npm run dev        # http://localhost:5173
+npm run dev
 ```
 
-Before `dev`/`build`, `react/scripts/sync-assets.mjs` copies `assets/` into
-`react/public/assets`. That copy is gitignored, so the ~85 MB of media is stored
-once, in `assets/`.
+Open <http://localhost:5173>.
 
-## Live
+Images and videos live in `assets/`. When you start or build the app,
+`react/scripts/sync-assets.mjs` copies them into `react/public/assets`; the copy is
+gitignored, so the media is stored once.
 
-<https://karlsondevlock.github.io/>
+## Build
 
-Deployed by `.github/workflows/deploy-pages.yml`, which builds `react/` and
-publishes `react/dist` to GitHub Pages (Pages source: **GitHub Actions**).
+```bash
+cd react
+npm run build
+```
 
-Routes (HashRouter):
+The site is generated in `react/dist`.
 
-- `/#/` — Home
-- `/#/projects/games` — Game projects
-- `/#/projects/web` — Website projects
-- `/#/projects/mobile` — Mobile projects (a project category, not a mobile app)
+## Deployment
 
-## Notes
+`.github/workflows/deploy-pages.yml` builds the app and publishes it to GitHub
+Pages on every push to `main`. Pages source: **GitHub Actions**.
 
-- The HTML → React mapping is documented in [`PORTING-NOTES.md`](./PORTING-NOTES.md).
-- Posters referenced by the original HTML (`assets/images/projects/*.svg`) do not
-  exist in the repo, so they were omitted rather than faked.
-- The original CSS declares `Inter` but never loaded an Inter webfont, so the site
-  uses the system font — that is what visitors actually saw.
-- Media is ~85 MB. It is copied into the build output, so keep an eye on the
-  GitHub Pages size limits if you add more videos.
+## Project structure
+
+```
+assets/    images and videos used by the site
+react/     React source for the website
+.github/   GitHub Pages deployment workflow
+```
+
+## Contact
+
+- GitHub: <https://github.com/KarlsonDevLock>
+- itch.io: <https://karlsondevlock.itch.io/>
+- YouTube: <https://www.youtube.com/@Devlock21>

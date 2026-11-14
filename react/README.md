@@ -1,8 +1,7 @@
-# KarlDev Portfolio — React + Vite + Tailwind
+# Portfolio Web App
 
-A 1:1 React port of the original static portfolio (`index.html`, `projects-*.html`,
-`style.css`). The old HTML/CSS files were removed from the repo root once this port
-was verified; they are still available in git history.
+The React source for my personal portfolio website: hero video, project carousel,
+game/website/mobile project galleries, about section, and contact links.
 
 ## Run
 
@@ -12,11 +11,12 @@ npm install
 npm run dev
 ```
 
-Open the URL Vite prints (default http://localhost:5173).
+Open <http://localhost:5173>.
 
-`npm run dev` / `npm run build` first run `scripts/sync-assets.mjs`, which copies
-the repo-root `assets/` into `public/assets` (gitignored, so the 85 MB of media
-is not stored twice). Run `npm run sync-assets` manually if you update assets.
+`npm run dev` and `npm run build` first copy the media from `../assets` into
+`public/assets` via `scripts/sync-assets.mjs`. Those copies are gitignored. Use
+`npm run sync-assets` if you change an image or video while the dev server is
+running.
 
 ## Build
 
@@ -25,33 +25,45 @@ npm run build
 npm run preview
 ```
 
-The build output is `react/dist`. `base` is `./`, so it also works from a
-GitHub Pages sub-folder (for example `https://user.github.io/repo/react/`).
+Output goes to `react/dist`. The Vite `base` is `./`, so the build also works from
+a sub-folder.
+
+## Routes
+
+| Route | Page |
+| --- | --- |
+| `/` | Home |
+| `/projects/games` | Game projects |
+| `/projects/web` | Website projects |
+| `/projects/mobile` | Mobile projects |
+
+Routing uses `HashRouter`, so the URLs on GitHub Pages look like
+`/#/projects/games`.
 
 ## Structure
 
 ```
 src/
-  App.jsx                 routes (HashRouter, GitHub Pages friendly)
-  index.css               Tailwind v4 theme tokens + the two CSS animations
-  data/projects.js        every project, tool, social link and gradient
+  App.jsx                 routes
+  index.css               Tailwind v4 theme tokens + CSS animations
+  data/projects.js        projects, tools, social links, gradients
   lib/asset.js            BASE_URL-aware asset paths
   components/
-    Header.jsx            fixed header, Projects dropdown (click / outside click / Escape)
-    ProjectCarousel.jsx   the 3-slide carousel, gradient changes per slide
-    ProjectShowcase.jsx   media + description card (alternating on project pages)
-    ProfileFrame.jsx      circular photo <-> logo cross-fade
+    Header.jsx            fixed header + Projects dropdown
+    ProjectCarousel.jsx   3-slide carousel with per-slide gradient
+    ProjectShowcase.jsx   media + description card
+    ProfileFrame.jsx      photo/logo cross-fade
     Footer.jsx
   pages/
     Home.jsx              hero video, carousel, about
-    ProjectsPage.jsx      Games / Website / Mobile lists
-public/assets             original images and videos, copied unchanged
+    ProjectsPage.jsx      games / website / mobile lists
+public/assets             images and videos copied from ../assets (gitignored)
 ```
 
 ## Notes
 
-- Routes are `/#/`, `/#/projects/games`, `/#/projects/web`, `/#/projects/mobile`.
-- The original site referenced `assets/images/projects/project-0X.svg` posters that do not
-  exist in the repo, so the posters were dropped (the videos themselves are unchanged).
-- The old static files have been removed from the repo root; this app lives entirely in
-  `/react`, and `.github/workflows/deploy-pages.yml` publishes it to GitHub Pages.
+- The media folder has no poster images (`project-*.svg`), so the project videos
+  play without posters.
+- Fonts are the system UI font, matching the rest of the site. No webfont is
+  downloaded.
+- Deployment is handled by `.github/workflows/deploy-pages.yml`.
